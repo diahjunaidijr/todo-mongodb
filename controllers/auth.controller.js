@@ -75,10 +75,17 @@ const loginUser = async (req, res) => {
     // Hasilkan token JWT
     const token = jwt.sign({ user: { id: user._id, username: user.username } }, SECRET_KEY);
 
+    // Cek nilai SECRET_KEY sebelum menggunakan jwt.sign
+    console.log("SECRET_KEY value:", process.env.SECRET_KEY);
+
     res.status(200).json({ token });
   } catch (error) {
     handleLoginError(res, error);
   }
 };
 
-module.exports = { registerUser, loginUser };
+const secureRoute = (req, res) => {
+  res.json({ message: 'Access granted', user: req.user });
+};
+
+module.exports = { registerUser, loginUser, secureRoute };
