@@ -1,8 +1,11 @@
+// app.js
+require('dotenv').config();
 const express = require('express');
-const mongoose = require('./config/mongoose');  
-const authRoutes = require('./routes/auth.routes');  
-const todoRoutes = require('./routes/todo.routes');  
-const authMiddleware = require('./middlewares/auth.middleware');  
+const mongoose = require('./config/mongoose');
+const authRoutes = require('./routes/auth.routes');
+const todoRoutes = require('./routes/todo.routes');
+const authMiddleware = require('./middlewares/auth.middleware');  // Pastikan ini benar
+
 const cors = require('cors');
 const app = express();
 
@@ -16,7 +19,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 
 // Middleware otentikasi untuk rute-rute di bawahnya
-app.use('/api/todo', authMiddleware.authenticateUser, todoRoutes);
+app.use('/api/todos', authMiddleware.authenticateUser, todoRoutes);
 
 // Tanggapan jika rute tidak ditemukan
 app.use((req, res, next) => {
