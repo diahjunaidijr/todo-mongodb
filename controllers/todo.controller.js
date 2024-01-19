@@ -3,8 +3,9 @@ const Todo = require('../models/todo.model');
 // Create Todo
 exports.createTodo = async (req, res) => {
   try {
-    const { title, description, completed } = req.body;
-    const todo = new Todo({ title, description, completed });
+    console.log('Request Body:', req.body); // Tambahkan ini
+    const { title, description, completed, userId } = req.body;
+    const todo = new Todo({ title, description, completed, userId });
     const savedTodo = await todo.save();
     res.json(savedTodo);
   } catch (error) {
@@ -12,6 +13,7 @@ exports.createTodo = async (req, res) => {
     res.status(500).send('Error saat membuat todo');
   }
 };
+
 
 // Get All Todos
 exports.getAllTodos = async (req, res) => {
