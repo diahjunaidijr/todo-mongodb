@@ -2,11 +2,13 @@
 const jwt = require('jsonwebtoken');
 const { SECRET_KEY } = process.env;
 
-const authenticateToken = (req, res, next) => {
+const authenticateUser = (req, res, next) => {
   const token = req.header('Authorization');
 
   if (!token) {
-    return res.status(401).json({ error: 'Unauthorized' });
+    const error = new Error('Unauthorized');
+    error.statusCode = 401;
+    return next(error);
   }
 
   try {
@@ -14,8 +16,9 @@ const authenticateToken = (req, res, next) => {
     req.user = decoded.user;
     next();
   } catch (error) {
-    return res.status(401).json({ error: 'Invalid token' });
+    error.statusCode = 401;
+    next(error);
   }
 };
 
-module.exports = { authenticateToken };
+module.exports = { authenticateUser };
