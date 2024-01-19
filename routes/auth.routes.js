@@ -1,15 +1,12 @@
+// auth.routes.js
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/auth.controller');
-const { authenticateToken } = require('../middlewares/auth.middleware');
 
-// Register User
+// Contoh pemanggilan Route.post() untuk endpoint register
 router.post('/register', authController.registerUser);
 
-// Login User
+// Contoh pemanggilan Route.post() untuk endpoint login
 router.post('/login', authController.loginUser);
-
-// Secure Route - Hanya dapat diakses jika memiliki token JWT yang valid
-router.get('/secure', authenticateToken, authController.secureRoute);
 
 module.exports = router;
